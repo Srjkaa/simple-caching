@@ -1,0 +1,18 @@
+{
+  "name": "simple-caching",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cache.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "cache",
+    "caching"
+  ],
+  "author": "srjkaa",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^6.1.4"
+  }
+}
