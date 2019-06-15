@@ -11,8 +11,12 @@ class Cache {
     return key in this.value;
   }
 
-  // TODO: add check for overflow
   add(key, value) {
+    if (this.currentCacheSize === this.maxCacheSize) {
+      // TODO: omit value according to selected strategy
+      return;
+    }
+
     this.value[key] = value;
     ++this.currentCacheSize;
   }

@@ -1,5 +1,6 @@
 const { Cache } = require('./Cache');
 const { calculateTriangleArea } = require('./calculateTriangleArea');
+const { encode } = require('./encode');
 
 function getTriangleArea(firstSide, secondSide, thirdSide) {
   if (!getTriangleArea.cache) {
@@ -8,8 +9,7 @@ function getTriangleArea(firstSide, secondSide, thirdSide) {
 
   const { cache } = getTriangleArea;
 
-  // TODO: implement 'unique key' formula
-  const uniqueKeyFromArguments = `first:${firstSide},second:${secondSide},third:${thirdSide}`;
+  const uniqueKeyFromArguments = encode(`${firstSide}${secondSide}${thirdSide}`, 'base64');
 
   if (cache.has(uniqueKeyFromArguments)) {
     return cache.get(uniqueKeyFromArguments);
