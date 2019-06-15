@@ -1,6 +1,6 @@
-const { Cache } = require('./Cache');
+const { Cache } = require('./caching/cache');
 const { calculateTriangleArea } = require('./calculateTriangleArea');
-const { encode } = require('./encode');
+const { base64Encode } = require('./encoding/encode');
 const { TriangleSidesValidator } = require('./validation/TriangleSidesValidator');
 const { TriangleExistenceValidator } = require('./validation/TriangleExistenceValidator');
 
@@ -23,8 +23,7 @@ function getTriangleArea(firstSide, secondSide, thirdSide) {
   }
   const { cache } = getTriangleArea;
 
-  const uniqueKeyFromArguments = encode(`${firstSide}${secondSide}${thirdSide}`, 'base64');
-
+  const uniqueKeyFromArguments = base64Encode(`${firstSide}${secondSide}${thirdSide}`);
   if (cache.has(uniqueKeyFromArguments)) {
     return cache.get(uniqueKeyFromArguments);
   }
