@@ -16,9 +16,7 @@ class Cache extends LeastFrequentUsedStrategy {
   add(key, value) {
     if (this.currentCacheSize === this.maxCacheSize) {
       const cacheKeyToOmit = this.getFirstLeastFrequentUsedCacheItem();
-      delete this.value[cacheKeyToOmit];
-      this.value[key] = new CacheItemModel(value);
-      return;
+      return this.replaceCacheItems(cacheKeyToOmit, key, value);
     }
 
     this.value[key] = new CacheItemModel(value);
@@ -30,6 +28,7 @@ class Cache extends LeastFrequentUsedStrategy {
     cacheItem.increaseUsesCount();
     return cacheItem;
   }
+
 }
 
 module.exports.Cache = Cache;

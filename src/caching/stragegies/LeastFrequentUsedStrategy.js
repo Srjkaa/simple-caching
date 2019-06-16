@@ -1,3 +1,4 @@
+const { CacheItemModel } = require('../../models/CacheItemModel');
 
 class LeastFrequentUsedStrategy {
 
@@ -17,6 +18,11 @@ class LeastFrequentUsedStrategy {
       }
     }
     return resultKey;
+  }
+
+  replaceCacheItems(keyToOmit, keyToAdd, valueToAdd) {
+    delete this.value[keyToOmit];
+    this.value[keyToAdd] = new CacheItemModel(valueToAdd);
   }
 
 }
