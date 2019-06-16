@@ -4,7 +4,7 @@ const { base64Encode } = require('./encoding/base64Encode');
 const { TriangleSidesValidator } = require('./validation/TriangleSidesValidator');
 const { TriangleExistenceValidator } = require('./validation/TriangleExistenceValidator');
 
-function getTriangleArea(firstSide, secondSide, thirdSide) {
+function getTriangleArea(firstSide, secondSide, thirdSide, cacheSize = 2000) {
   try {
     if (!TriangleSidesValidator.validate(firstSide, secondSide, thirdSide)) {
       throw new RangeError(TriangleSidesValidator.ERROR_MESSAGE);
@@ -19,16 +19,18 @@ function getTriangleArea(firstSide, secondSide, thirdSide) {
   }
 
   if (!getTriangleArea.cache) {
-    getTriangleArea.cache = new Cache(2000);
+    getTriangleArea.cache = new Cache(cacheSize);
   }
   const { cache } = getTriangleArea;
 
   const uniqueKeyFromArguments = base64Encode(`${firstSide}${secondSide}${thirdSide}`);
   if (cache.has(uniqueKeyFromArguments)) {
-    return cache.get(uniqueKeyFromArguments);
+    return cache.get(uniqueKeyFromArguments).value;
   }
 
   const area = calculateTriangleArea(firstSide, secondSide, thirdSide);
   cache.add(uniqueKeyFromArguments, area);
   return area;
 }
+
+module.exports.getTriangleArea = getTriangleArea;
