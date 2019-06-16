@@ -7,7 +7,7 @@ class CacheItemModel {
 
   constructor(value) {
     this.value = value;
-    this._usesCount = 1;
+    this._usesCount = 0;
   }
 
   increaseUsesCount() {
