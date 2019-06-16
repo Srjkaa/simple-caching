@@ -1,4 +1,4 @@
-const { Cache } = require('./caching/cache');
+const { Cache } = require('./caching/Cache');
 const { calculateTriangleArea } = require('./calculateTriangleArea');
 const { base64Encode } = require('./encoding/base64Encode');
 const { TriangleSidesValidator } = require('./validation/TriangleSidesValidator');

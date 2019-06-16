@@ -1,7 +1,7 @@
 const assert = require('assert');
 const { TriangleExistenceValidator } = require('../src/validation/TriangleExistenceValidator');
 
-describe('TriangleSidesValidator class', () => {
+describe('TrianglExistenceValidator class', () => {
 
   it('validate function is accessible without creating class instance', () => {
     assert.ok(TriangleExistenceValidator.validate);
