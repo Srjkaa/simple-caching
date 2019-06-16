@@ -1,10 +1,12 @@
+const { CacheItemModel } = require('../models/CacheItemModel');
+const { LeastFrequentUsedStrategy } = require('./stragegies/LeastFrequentUsedStrategy');
 
-class Cache {
+class Cache extends LeastFrequentUsedStrategy {
 
-  constructor(cacheSize = 1000) {
+  constructor(cacheSize) {
+    super();
     this.maxCacheSize = cacheSize;
     this.currentCacheSize = 0;
-    this.value = {};
   }
 
   has(key) {
@@ -13,18 +15,21 @@ class Cache {
 
   add(key, value) {
     if (this.currentCacheSize === this.maxCacheSize) {
-      // TODO: omit value according to selected strategy
+      const cacheKeyToOmit = this.getFirstLeastFrequentUsedCacheItem();
+      delete this.value[cacheKeyToOmit];
+      this.value[key] = new CacheItemModel(value);
       return;
     }
 
-    this.value[key] = value;
+    this.value[key] = new CacheItemModel(value);
     ++this.currentCacheSize;
   }
 
   get(key) {
-    return this.value[key];
+    const cacheItem = this.value[key];
+    cacheItem.increaseUsesCount();
+    return cacheItem;
   }
-
 }
 
 module.exports.Cache = Cache;
