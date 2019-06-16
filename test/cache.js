@@ -54,7 +54,34 @@ describe('Cache and LFU strategy', () => {
   });
 
   describe('Cache class using Least Frequent Used strategy', () => {
-    const cache = new Cache(3);
+    const firstItemKey = base64Encode('first');
+    const secondItemKey = base64Encode('second');
+    const thirdItemKey = base64Encode('third');
+    const fourthItemKey = base64Encode('fourth');
+
+    it('should return first LFU cached item key', () => {
+      const cache = new Cache(3);
+      cache.add(firstItemKey, 1);
+      cache.add(secondItemKey, 2);
+      cache.add(thirdItemKey, 3);
+      cache.get(firstItemKey);
+      cache.get(thirdItemKey);
+
+      assert.equal(cache.getFirstLeastFrequentUsedCacheItem(), secondItemKey);
+    });
+
+    it('should replace LFU cached item', () => {
+      const cache = new Cache(3);
+
+      cache.add(firstItemKey, 1);
+      cache.add(secondItemKey, 2);
+      cache.add(thirdItemKey, 3);
+      cache.get(firstItemKey);
+      cache.get(thirdItemKey);
+      cache.add(fourthItemKey, 4);
+
+      assert.equal(cache.has(secondItemKey), false);
+    });
   });
 
 });
